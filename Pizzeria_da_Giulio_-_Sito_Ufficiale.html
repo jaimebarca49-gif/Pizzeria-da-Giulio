@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="it" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzeria da Giulio | Pizze Tradizionali, Speciali e Partite Live</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#8B1E2B',
+                            darkred: '#5D121B',
+                            lightred: '#A82837',
+                            cream: '#FFF8EA',
+                            gold: '#D4AF37',
+                            goldhover: '#B89528'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        display: ['Fredoka', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,800;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .logo-font { font-family: 'Fredoka', sans-serif; }
+        .serif-font { font-family: 'Playfair Display', serif; }
+        .bg-pattern {
+            background-color: #5D121B;
+            background-image: radial-gradient(#8B1E2B 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-gold selection:text-brand-darkred">
+
+    <!-- NAVBAR HEADER -->
+    <header class="sticky top-0 z-50 bg-brand-darkred/95 backdrop-blur-md border-b border-brand-gold/20 shadow-xl transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-12 h-12 rounded-full bg-brand-red border-2 border-brand-gold flex items-center justify-center shadow-lg transform group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-pizza-slice text-brand-gold text-2xl"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="logo-font text-2xl sm:text-3xl font-bold text-brand-cream tracking-wide uppercase leading-none drop-shadow">
+                        PIZZERIA
+                    </span>
+                    <span class="logo-font text-lg text-brand-gold font-semibold tracking-widest leading-none text-right -mt-1 italic">
+                        da Giulio
+                    </span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-brand-cream font-medium text-sm tracking-wide">
+                <a href="#home" class="hover:text-brand-gold transition-colors py-1 border-b-2 border-transparent hover:border-brand-gold">HOME</a>
+                <a href="#chi-siamo" class="hover:text-brand-gold transition-colors py-1 border-b-2 border-transparent hover:border-brand-gold">LA SALA & PARTITE</a>
+                <a href="#menu" class="hover:text-brand-gold transition-colors py-1 border-b-2 border-transparent hover:border-brand-gold">IL MENU</a>
+                <a href="#stagionali" class="hover:text-brand-gold transition-colors py-1 border-b-2 border-transparent hover:border-brand-gold">STAGIONALI</a>
+                <a href="#prenota" class="hover:text-brand-gold transition-colors py-1 border-b-2 border-transparent hover:border-brand-gold">PRENOTA & ASPORTO</a>
+            </nav>
+
+            <!-- Call Action / Phone -->
+            <div class="hidden lg:flex items-center gap-4">
+                <a href="tel:+393938653437" class="flex items-center gap-2 bg-brand-red hover:bg-brand-lightred text-brand-cream px-4 py-2.5 rounded-full border border-brand-gold/40 text-sm font-semibold transition-all shadow-md hover:shadow-brand-gold/10">
+                    <i class="fa-solid fa-phone text-brand-gold"></i>
+                    <span>393 8653437</span>
+                </a>
+                <button onclick="shareWebsite()" class="flex items-center gap-2 bg-brand-gold hover:bg-brand-goldhover text-brand-darkred px-4 py-2.5 rounded-full text-sm font-bold transition-all shadow-md">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    <span>Condividi</span>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-brand-cream text-2xl focus:outline-none p-2">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-darkred border-t border-brand-gold/20 px-4 pt-4 pb-6 space-y-3">
+            <a href="#home" class="mobile-link block text-brand-cream hover:text-brand-gold text-lg py-2">Home</a>
+            <a href="#chi-siamo" class="mobile-link block text-brand-cream hover:text-brand-gold text-lg py-2">La Sala & Partite Live</a>
+            <a href="#menu" class="mobile-link block text-brand-cream hover:text-brand-gold text-lg py-2">Menu Completo</a>
+            <a href="#stagionali" class="mobile-link block text-brand-cream hover:text-brand-gold text-lg py-2">Pizze Stagionali</a>
+            <a href="#prenota" class="mobile-link block text-brand-cream hover:text-brand-gold text-lg py-2">Prenotazione / Asporto</a>
+            <div class="pt-2 flex flex-col gap-2">
+                <a href="tel:+393938653437" class="w-full flex items-center justify-center gap-2 bg-brand-gold text-brand-darkred font-bold px-4 py-3 rounded-xl shadow-lg">
+                    <i class="fa-solid fa-phone"></i>
+                    <span>Chiama: 393 8653437</span>
+                </a>
+                <button onclick="shareWebsite()" class="w-full flex items-center justify-center gap-2 bg-brand-red border border-brand-gold/40 text-brand-cream font-bold px-4 py-3 rounded-xl shadow-md">
+                    <i class="fa-solid fa-share-nodes text-brand-gold"></i>
+                    <span>Condividi il Sito / Menu</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="relative bg-brand-darkred text-brand-cream overflow-hidden min-h-[85vh] flex items-center">
+        <!-- Background Overlay Image & Pattern -->
+        <div class="absolute inset-0 z-0 opacity-25 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1600&auto=format&fit=crop');"></div>
+        <div class="absolute inset-0 z-0 bg-gradient-to-r from-brand-darkred via-brand-darkred/90 to-transparent"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 bg-brand-red/80 border border-brand-gold/40 px-4 py-1.5 rounded-full text-brand-gold text-sm font-semibold tracking-wide">
+                    <i class="fa-solid fa-fire"></i> Cottura nel Forno a Legna Tradizionale
+                </div>
+                
+                <h1 class="serif-font text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-none">
+                    La vera pizza <br><span class="text-brand-gold italic">artigianale</span> da Giulio.
+                </h1>
+                
+                <p class="text-slate-300 text-lg sm:text-xl max-w-2xl font-light leading-relaxed">
+                    Ingredienti selezionati, lievitazione naturale e un'atmosfera calda e accogliente dove gustare le tradizionali e le nostre esclusive pizze stagionali.
+                </p>
+
+                <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <a href="#menu" class="w-full sm:w-auto bg-brand-gold hover:bg-brand-goldhover text-brand-darkred font-bold text-lg px-8 py-4 rounded-xl shadow-lg hover:shadow-brand-gold/20 transition-all text-center flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-book-open"></i> Sfoglia il Menu
+                    </a>
+                    <a href="#prenota" class="w-full sm:w-auto bg-brand-red hover:bg-brand-lightred border border-brand-gold/40 text-brand-cream font-bold text-lg px-8 py-4 rounded-xl shadow-md transition-all text-center flex items-center justify-center gap-3">
+                        <i class="fa-solid fa-calendar-check text-brand-gold"></i> Prenota un Tavolo
+                    </a>
+                </div>
+
+                <!-- Fast Features Badge -->
+                <div class="pt-8 border-t border-brand-gold/20 grid grid-cols-3 gap-4 text-center lg:text-left">
+                    <div>
+                        <div class="text-brand-gold text-xl sm:text-2xl font-bold">40+</div>
+                        <div class="text-slate-300 text-xs sm:text-sm">Gusti di Pizze</div>
+                    </div>
+                    <div>
+                        <div class="text-brand-gold text-xl sm:text-2xl font-bold">3 Taglie</div>
+                        <div class="text-slate-300 text-xs sm:text-sm">Ridotta, Normale, Gigante</div>
+                    </div>
+                    <div>
+                        <div class="text-brand-gold text-xl sm:text-2xl font-bold">Sky & DAZN</div>
+                        <div class="text-slate-300 text-xs sm:text-sm">Partite in Diretta TV</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Image Frame (Forno & Pizze) -->
+            <div class="lg:col-span-5 relative">
+                <div class="relative mx-auto max-w-md lg:max-w-none">
+                    <!-- Main Frame -->
+                    <div class="relative z-10 rounded-2xl overflow-hidden border-4 border-brand-gold/30 shadow-2xl bg-brand-darkred transform lg:rotate-1 hover:rotate-0 transition-transform duration-500">
+                        <img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?q=80&w=800&auto=format&fit=crop" alt="Pizze nel forno a legna da Giulio" class="w-full h-96 object-cover">
+                        <div class="p-4 bg-brand-darkred/95 border-t border-brand-gold/20 flex items-center justify-between">
+                            <span class="text-sm font-semibold text-brand-gold"><i class="fa-solid fa-fire-burner mr-2"></i>Forno Vivo a Legna</span>
+                            <span class="text-xs text-slate-300">Cottura ad Alta Temperatura</span>
+                        </div>
+                    </div>
+                    <!-- Decorative Badge -->
+                    <div class="absolute -bottom-6 -left-6 z-20 bg-brand-gold text-brand-darkred p-4 rounded-2xl shadow-xl font-bold flex items-center gap-3 border-2 border-brand-cream">
+                        <i class="fa-solid fa-trophy text-3xl"></i>
+                        <div>
+                            <div class="text-xs uppercase tracking-wider text-brand-darkred/80 font-bold">Specialità della casa</div>
+                            <div class="text-sm font-extrabold">Formato Gigante da Condividere</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CHI SIAMO / LA NOSTRA SALA & EVENTI LIVE -->
+    <section id="chi-siamo" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+                <h2 class="text-brand-red font-bold uppercase tracking-widest text-sm">La Nostra Accoglienza</h2>
+                <h3 class="serif-font text-3xl sm:text-5xl font-bold text-slate-900">Un locale per comitive, famiglie e serate di sport</h3>
+                <div class="w-20 h-1 bg-brand-gold mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Text Info -->
+                <div class="space-y-6">
+                    <div class="prose prose-slate max-w-none text-slate-600 text-lg leading-relaxed">
+                        <p>
+                            Alla <strong>Pizzeria da Giulio</strong> trovi l'ambiente ideale per ogni tua serata. Le nostre ampie sale condizionate sono allestite con lunghe tavolate perfette per festeggiare compleanni, riunioni di gruppo o semplicemente una cena in compagnia davanti a una buona pizza fumante.
+                        </p>
+                        <p>
+                            Siamo il punto di riferimento per gli appassionati di calcio: disponiamo di schermi TV ad alta definizione visibili da tutti i tavoli, per non perderti nemmeno un minuto della Serie A e delle coppe europee tifando in allegria.
+                        </p>
+                    </div>
+
+                    <!-- Highlight Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-brand-red/10 text-brand-red flex items-center justify-center shrink-0 font-bold">
+                                <i class="fa-solid fa-tv text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Partite Live TV</h4>
+                                <p class="text-xs text-slate-500">Dirette sportive su schermi panoramici in sala.</p>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+                            <div class="w-10 h-10 rounded-lg bg-brand-red/10 text-brand-red flex items-center justify-center shrink-0 font-bold">
+                                <i class="fa-solid fa-users text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Tavolate & Gruppi</h4>
+                                <p class="text-xs text-slate-500">Spazi ampi e accoglienti per grandi comitive.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photo Gallery Grid (Inspired by Client Photos) -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <div class="rounded-2xl overflow-hidden shadow-md h-52 bg-slate-100">
+                            <!-- Pizza Photo placeholder or photo style -->
+                            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=600&auto=format&fit=crop" alt="Pizza al tavolo" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="rounded-2xl overflow-hidden shadow-md h-40 bg-brand-darkred p-6 text-brand-cream flex flex-col justify-between">
+                            <i class="fa-solid fa-beer-mug-empty text-3xl text-brand-gold"></i>
+                            <div>
+                                <div class="font-bold text-lg">Birre & Bibbite</div>
+                                <div class="text-xs text-slate-300">L'abbinamento perfetto per ogni pizza</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4 pt-6">
+                        <div class="rounded-2xl overflow-hidden shadow-md h-40 bg-brand-gold p-6 text-brand-darkred flex flex-col justify-between">
+                            <i class="fa-solid fa-tv text-3xl"></i>
+                            <div>
+                                <div class="font-bold text-lg">Serie A in Diretta</div>
+                                <div class="text-xs text-brand-darkred/80 font-medium">Guarda le partite da Giulio</div>
+                            </div>
+                        </div>
+                        <div class="rounded-2xl overflow-hidden shadow-md h-52 bg-slate-100">
+                            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=600&auto=format&fit=crop" alt="Sala Pizzeria" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PIZZE STAGIONALI IN EVIDENZA -->
+    <section id="stagionali" class="py-16 bg-gradient-to-b from-brand-darkred to-brand-red text-brand-cream relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+                <div>
+                    <span class="inline-block bg-brand-gold text-brand-darkred text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-2">Edizione Limitata</span>
+                    <h2 class="serif-font text-3xl sm:text-5xl font-bold text-white">Le Nostre Pizze Stagionali</h2>
+                </div>
+                <p class="text-slate-200 text-sm sm:text-base max-w-md">
+                    Ingredienti freschissimi di stagione: asparagi, ricci di mare, carciofi freschi e fiori di zucca. Chiedi disponibilità del giorno al personale!
+                </p>
+            </div>
+
+            <!-- Cards Pizze Stagionali -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 -->
+                <div class="bg-brand-darkred/80 border border-brand-gold/30 rounded-2xl p-6 shadow-xl hover:border-brand-gold transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="font-bold text-xl text-white">Asparagi & Ricci</h3>
+                            <span class="bg-brand-gold/20 border border-brand-gold text-brand-gold text-xs px-2.5 py-1 rounded-full font-bold">Stagionale</span>
+                        </div>
+                        <p class="text-slate-300 text-sm mb-4">Sugo, mozzarella, asparagi selvatici e polpa di ricci freschi.</p>
+                    </div>
+                    <div class="pt-4 border-t border-white/10 flex justify-between items-center text-sm font-semibold">
+                        <span class="text-slate-300">Prezzo Stagionale</span>
+                        <span class="text-brand-gold font-bold">Richiedi in Sala</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-brand-darkred/80 border border-brand-gold/30 rounded-2xl p-6 shadow-xl hover:border-brand-gold transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="font-bold text-xl text-white">Carciofi e Bottarga</h3>
+                            <span class="bg-brand-gold/20 border border-brand-gold text-brand-gold text-xs px-2.5 py-1 rounded-full font-bold">Specialità</span>
+                        </div>
+                        <p class="text-slate-300 text-sm mb-4">Sugo, mozzarella, carciofi freschi croccanti e spolverata di bottarga d'uggia.</p>
+                    </div>
+                    <div class="pt-4 border-t border-white/10 flex justify-between items-center text-sm font-semibold">
+                        <span class="text-slate-300">Normale / Gigante</span>
+                        <span class="text-brand-gold font-bold">€11,00 / €13,00</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-brand-darkred/80 border border-brand-gold/30 rounded-2xl p-6 shadow-xl hover:border-brand-gold transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="font-bold text-xl text-white">Fiori di Zucca</h3>
+                            <span class="bg-brand-gold/20 border border-brand-gold text-brand-gold text-xs px-2.5 py-1 rounded-full font-bold">Delicata</span>
+                        </div>
+                        <p class="text-slate-300 text-sm mb-4">Sugo, mozzarella e fiori di zucca freschi di giornata.</p>
+                    </div>
+                    <div class="pt-4 border-t border-white/10 flex justify-between items-center text-sm font-semibold">
+                        <span class="text-slate-300">Normale / Gigante</span>
+                        <span class="text-brand-gold font-bold">€7,50 / €10,50</span>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-brand-darkred/80 border border-brand-gold/30 rounded-2xl p-6 shadow-xl hover:border-brand-gold transition-all flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="font-bold text-xl text-white">Asparagi 4 Formaggi</h3>
+                            <span class="bg-brand-gold/20 border border-brand-gold text-brand-gold text-xs px-2.5 py-1 rounded-full font-bold">Gustosa</span>
+                        </div>
+                        <p class="text-slate-300 text-sm mb-4">Sugo, mozzarella, asparagi e selezione di 4 formaggi fusi.</p>
+                    </div>
+                    <div class="pt-4 border-t border-white/10 flex justify-between items-center text-sm font-semibold">
+                        <span class="text-slate-300">Normale / Gigante</span>
+                        <span class="text-brand-gold font-bold">€11,00 / €13,00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IL MENU DIGITALE INTERATTIVO (RICAVATO DAI MENU REALI) -->
+    <section id="menu" class="py-20 bg-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-10 space-y-3">
+                <h2 class="text-brand-red font-bold uppercase tracking-widest text-sm">Sfoglia & Gusta</h2>
+                <h3 class="serif-font text-3xl sm:text-5xl font-bold text-slate-900">Il Menu Digitale Completo</h3>
+                <p class="text-slate-600 text-sm sm:text-base">Tutte le pizze preparate al momento nel nostro forno a legna. Seleziona la taglia desiderata per confrontare i prezzi.</p>
+            </div>
+
+            <!-- Search & Filters Container -->
+            <div class="bg-white p-6 rounded-2xl shadow-md mb-8 border border-slate-200 space-y-4">
+                <div class="flex flex-col md:flex-row gap-4 justify-between items-center">
+                    
+                    <!-- Search Input -->
+                    <div class="relative w-full md:w-80">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400"></i>
+                        <input type="text" id="menu-search" placeholder="Cerca ingredienti o pizza (es. Gorgonzola, Salmone)..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-red focus:bg-white transition-all">
+                    </div>
+
+                    <!-- Category Pills -->
+                    <div class="flex flex-wrap gap-2 justify-center w-full md:w-auto" id="category-filters">
+                        <button data-cat="all" class="cat-btn bg-brand-red text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shadow-sm transition-all">Tutte</button>
+                        <button data-cat="tradizionali" class="cat-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all">Tradizionali</button>
+                        <button data-cat="speciali" class="cat-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all">Speciali</button>
+                        <button data-cat="stagionali" class="cat-btn bg-slate-100 text-slate-700 hover:bg-slate-200 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all">Stagionali</button>
+                    </div>
+
+                    <!-- Size View Selector -->
+                    <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-bold">
+                        <button id="size-normale" class="size-btn px-3 py-1.5 rounded-lg bg-white text-brand-darkred shadow-sm">Normale</button>
+                        <button id="size-gigante" class="size-btn px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900">Gigante</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menu Items Grid -->
+            <div id="menu-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Javascript will dynamically render pizzas here -->
+            </div>
+
+            <!-- Menu Extras / Aggiunte Box -->
+            <div class="mt-12 bg-white rounded-2xl p-6 sm:p-8 shadow-md border border-slate-200">
+                <h4 class="font-bold text-xl text-brand-darkred mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-plus-circle text-brand-gold"></i> Personalizzazioni & Aggiunte
+                </h4>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                        <div class="text-xs text-slate-500 uppercase font-semibold">Mozzarella</div>
+                        <div class="text-sm font-bold text-slate-800">Rid: €0,50 | Nor: €1,00 | Gig: €2,00</div>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                        <div class="text-xs text-slate-500 uppercase font-semibold">Mare</div>
+                        <div class="text-sm font-bold text-slate-800">Rid: €1,00 | Nor: €2,00 | Gig: €3,00</div>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                        <div class="text-xs text-slate-500 uppercase font-semibold">Terra</div>
+                        <div class="text-sm font-bold text-slate-800">Rid: €0,50 | Nor: €1,00 | Gig: €2,00</div>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100">
+                        <div class="text-xs text-slate-500 uppercase font-semibold">Bufala</div>
+                        <div class="text-sm font-bold text-slate-800">Rid: €1,00 | Nor: €2,00 | Gig: €3,00</div>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap justify-between text-xs text-slate-600 gap-4">
+                    <div><span class="font-bold text-slate-800">Riduzione Pizza Ridotta:</span> -€1,00 dal prezzo normale</div>
+                    <div><span class="font-bold text-slate-800">Cartone Porta Pizza:</span> €0,30 cadauno</div>
+                    <div><span class="font-bold text-slate-800">Consegna a Domicilio:</span> €1,00 per ordine</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SEZIONE CALCIO & DIRETTESPORTIVE -->
+    <section class="py-16 bg-slate-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=1200&auto=format&fit=crop');"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="bg-gradient-to-r from-brand-darkred to-brand-red rounded-3xl p-8 sm:p-12 shadow-2xl border border-brand-gold/30 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div class="space-y-4 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 bg-black/40 px-3 py-1 rounded-full text-brand-gold text-xs font-bold uppercase tracking-wider">
+                        <i class="fa-solid fa-tv"></i> Diretta TV Sky & DAZN
+                    </div>
+                    <h3 class="serif-font text-3xl sm:text-4xl font-extrabold text-white">Vieni a tifare la tua squadra da Giulio!</h3>
+                    <p class="text-slate-200 max-w-xl text-sm sm:text-base">
+                        Schermi giganti in sala, ottima pizza calda e birra alla spina. Prenota in anticipo il tuo tavolo per le serate di Champions League e Serie A per te e i tuoi amici!
+                    </p>
+                </div>
+                <div class="shrink-0 w-full lg:w-auto">
+                    <a href="#prenota" class="inline-flex items-center justify-center gap-3 bg-brand-gold hover:bg-brand-goldhover text-brand-darkred font-bold px-8 py-4 rounded-xl text-lg shadow-xl transition-all w-full lg:w-auto">
+                        <i class="fa-solid fa-ticket"></i> Prenota per la Partita
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FORM DI PRENOTAZIONE E CONTATTI -->
+    <section id="prenota" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <!-- Contact Info & Map Details -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div>
+                        <span class="text-brand-red font-bold uppercase tracking-widest text-sm">Dove Siamo & Info</span>
+                        <h2 class="serif-font text-3xl sm:text-4xl font-bold text-slate-900 mt-2">Vieni a trovarci o ordina a domicilio</h2>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center font-bold text-xl shrink-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Indirizzo</h4>
+                                <p class="text-slate-600 text-sm">Via Michelangelo Pira 2a</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center font-bold text-xl shrink-0">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Telefono & Asporto</h4>
+                                <p class="text-slate-600 text-sm">Chiamaci per ordinazioni rapide o info tavoli.</p>
+                                <a href="tel:+393938653437" class="text-brand-red font-bold hover:underline text-base">393 8653437</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-brand-red/10 text-brand-red flex items-center justify-center font-bold text-xl shrink-0">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900">Orari di Apertura</h4>
+                                <p class="text-slate-600 text-sm">Martedì - Domenica: 19:00 - 23:30</p>
+                                <p class="text-slate-400 text-xs mt-0.5">Lunedì: Giorno di chiusura</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service Badges -->
+                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                        <div class="font-bold text-slate-900 text-sm uppercase tracking-wide">Servizi Attivi</div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-3 py-1.5 rounded-full"><i class="fa-solid fa-motorcycle mr-1"></i> Consegna a Domicilio (€1.00)</span>
+                            <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-3 py-1.5 rounded-full"><i class="fa-solid fa-bag-shopping mr-1"></i> Asporto in Locale</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1.5 rounded-full"><i class="fa-solid fa-chair mr-1"></i> Servizio al Tavolo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Booking / Order Form -->
+                <div class="lg:col-span-7 bg-slate-50 p-8 rounded-3xl border border-slate-200 shadow-lg">
+                    <h3 class="serif-font text-2xl font-bold text-slate-900 mb-6">Invia una richiesta di Prenotazione o Asporto</h3>
+                    
+                    <form id="booking-form" class="space-y-4">
+                        <!-- Type Radio -->
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <label class="cursor-pointer">
+                                <input type="radio" name="service-type" value="tavolo" checked class="peer sr-only">
+                                <div class="p-3 text-center border-2 border-slate-200 rounded-xl text-sm font-bold text-slate-600 peer-checked:border-brand-red peer-checked:bg-brand-red/10 peer-checked:text-brand-red transition-all">
+                                    <i class="fa-solid fa-utensils mr-2"></i> Prenota Tavolo
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input type="radio" name="service-type" value="asporto" class="peer sr-only">
+                                <div class="p-3 text-center border-2 border-slate-200 rounded-xl text-sm font-bold text-slate-600 peer-checked:border-brand-red peer-checked:bg-brand-red/10 peer-checked:text-brand-red transition-all">
+                                    <i class="fa-solid fa-pizza-slice mr-2"></i> Ordine Asporto
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nome e Cognome *</label>
+                                <input type="text" required placeholder="Es. Marco Rossi" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-red">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Numero di Telefono *</label>
+                                <input type="tel" required placeholder="Es. 340 1234567" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-red">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Data *</label>
+                                <input type="date" required class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-red">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Orario *</label>
+                                <select required class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-red">
+                                    <option value="">Seleziona</option>
+                                    <option>19:30</option>
+                                    <option>20:00</option>
+                                    <option>20:30</option>
+                                    <option>21:00</option>
+                                    <option>21:30</option>
+                                    <option>22:00</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Coperti / Persone</label>
+                                <input type="number" min="1" max="30" value="2" class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-red">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Note o Ordine Pizze</label>
+                            <textarea rows="3" placeholder="Indica qui eventuali allergie, richieste particolari o l'elenco delle pizze desiderate..." class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-red"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-brand-red hover:bg-brand-lightred text-white font-bold py-4 rounded-xl shadow-lg transition-all text-base flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane text-brand-gold"></i> Conferma e Invia Richiesta
+                        </button>
+                    </form>
+
+                    <!-- Alert message dynamic -->
+                    <div id="booking-alert" class="hidden mt-4 p-4 rounded-xl bg-emerald-100 text-emerald-800 text-sm font-semibold text-center">
+                        <i class="fa-solid fa-circle-check mr-2"></i> Richiesta inviata con successo! Ti risponderemo a breve per la conferma.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-brand-darkred text-brand-cream border-t border-brand-gold/20 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                
+                <!-- Brand Info -->
+                <div class="space-y-4 md:col-span-1">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-red border border-brand-gold flex items-center justify-center">
+                            <i class="fa-solid fa-pizza-slice text-brand-gold text-lg"></i>
+                        </div>
+                        <span class="logo-font text-2xl font-bold text-brand-cream tracking-wide">PIZZERIA <span class="text-brand-gold text-sm italic">da Giulio</span></span>
+                    </div>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Tradizione artigianale, ingredienti locali e forno a legna. Il punto di incontro per gli amanti della buona pizza.
+                    </p>
+                </div>
+
+                <!-- Navigation Quick Links -->
+                <div>
+                    <h4 class="font-bold text-brand-gold text-sm uppercase tracking-wider mb-4">Navigazione</h4>
+                    <ul class="space-y-2 text-xs text-slate-300">
+                        <li><a href="#home" class="hover:text-brand-gold transition-colors">Home Page</a></li>
+                        <li><a href="#chi-siamo" class="hover:text-brand-gold transition-colors">La Sala e le Partite Live</a></li>
+                        <li><a href="#menu" class="hover:text-brand-gold transition-colors">Menu Digitale Completo</a></li>
+                        <li><a href="#stagionali" class="hover:text-brand-gold transition-colors">Le Pizze Stagionali</a></li>
+                    </ul>
+                </div>
+
+                <!-- Pizze Popolari -->
+                <div>
+                    <h4 class="font-bold text-brand-gold text-sm uppercase tracking-wider mb-4">Le Più Richieste</h4>
+                    <ul class="space-y-2 text-xs text-slate-300">
+                        <li>Pizza Attila (Funghi, Provolone, Guanciale)</li>
+                        <li>Pizza Baiana (Olive, Peperoni, Salsiccia)</li>
+                        <li>Pizza Mari e Monti</li>
+                        <li>Pizza Asparagi e Ricci</li>
+                    </ul>
+                </div>
+
+                <!-- Socials & Contacts -->
+                <div>
+                    <h4 class="font-bold text-brand-gold text-sm uppercase tracking-wider mb-4">Contatti & Info</h4>
+                    <p class="text-xs text-slate-300 mb-2"><i class="fa-solid fa-location-dot text-brand-gold mr-2"></i>Via Michelangelo Pira 2a</p>
+                    <p class="text-xs text-slate-300 mb-4"><i class="fa-solid fa-phone text-brand-gold mr-2"></i>Tel: <a href="tel:+393938653437" class="hover:underline text-brand-cream">393 8653437</a></p>
+                    <div class="flex gap-3 mb-4">
+                        <a href="#" class="w-9 h-9 rounded-full bg-brand-red/80 hover:bg-brand-gold hover:text-brand-darkred flex items-center justify-center text-sm transition-all"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-brand-red/80 hover:bg-brand-gold hover:text-brand-darkred flex items-center justify-center text-sm transition-all"><i class="fa-brands fa-instagram"></i></a>
+                        <button onclick="shareWebsite()" title="Condividi il sito" class="w-9 h-9 rounded-full bg-brand-gold text-brand-darkred hover:bg-brand-cream flex items-center justify-center text-sm transition-all"><i class="fa-solid fa-share-nodes"></i></button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="pt-8 border-t border-brand-gold/10 text-center text-xs text-slate-400 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <div>© 2026 Pizzeria da Giulio - Via Michelangelo Pira 2a. Tutti i diritti riservati.</div>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:underline">Privacy Policy</a>
+                    <a href="#" class="hover:underline">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT PER INTERATTIVITÀ E DATI DEL MENU REALE -->
+    <script>
+        // DATI REALI DAL MENU IN IMMAGINE
+        const menuPizze = [
+            // TRADIZIONALI
+            { nome: "Marinara", cat: "tradizionali", ingred: "Pomodoro, aglio, origano e olio extravergine d'oliva", pNorm: "4,00", pGig: "6,00" },
+            { nome: "Margherita", cat: "tradizionali", ingred: "Sugo, mozzarella", pNorm: "5,00", pGig: "7,00" },
+            { nome: "Napoli", cat: "tradizionali", ingred: "Sugo, mozzarella, acciughe, capperi", pNorm: "6,00", pGig: "8,00" },
+            { nome: "Calzone", cat: "tradizionali", ingred: "Sugo, mozzarella, prosciutto cotto, funghi prataioli", pNorm: "7,00", pGig: "9,00" },
+            { nome: "Canadese", cat: "tradizionali", ingred: "Sugo, mozzarella, prosciutto cotto, wurstel, funghi prataioli", pNorm: "8,00", pGig: "10,00" },
+            { nome: "Funghi", cat: "tradizionali", ingred: "Sugo, mozzarella, funghi prataioli", pNorm: "6,00", pGig: "8,00" },
+            { nome: "Caprese", cat: "tradizionali", ingred: "Pomodoro, aglio, pomodoro fresco e basilico", pNorm: "6,00", pGig: "8,00" },
+            { nome: "Funghi di Carne", cat: "tradizionali", ingred: "Sugo, mozzarella, funghi di carne", pNorm: "7,50", pGig: "9,50" },
+            { nome: "Carbonara", cat: "tradizionali", ingred: "Sugo, mozzarella, uova, pancetta, grana", pNorm: "8,50", pGig: "11,50" },
+            { nome: "Grana e Rucola", cat: "tradizionali", ingred: "Sugo, mozzarella, rucola, grana", pNorm: "6,50", pGig: "8,50" },
+            { nome: "Ortolana", cat: "tradizionali", ingred: "Sugo, mozzarella, melanzane, peperoni, zucchine arrostite", pNorm: "7,50", pGig: "10,50" },
+            { nome: "Parmigiana", cat: "tradizionali", ingred: "Sugo, mozzarella, melanzane, parmigiano", pNorm: "7,00", pGig: "9,00" },
+            { nome: "Patatosa", cat: "tradizionali", ingred: "Sugo, mozzarella, patate", pNorm: "6,00", pGig: "8,00" },
+            { nome: "4 Formaggi", cat: "tradizionali", ingred: "Sugo, mozzarella, gorgonzola, pecorino, fontina, emmenthal", pNorm: "8,00", pGig: "11,00" },
+            { nome: "Wurstel", cat: "tradizionali", ingred: "Sugo, mozzarella, wurstel", pNorm: "6,00", pGig: "8,00" },
+            { nome: "4 Stagioni", cat: "tradizionali", ingred: "Sugo, mozzarella, olive nere, carciofini, prosciutto, funghi", pNorm: "8,50", pGig: "10,50" },
+            { nome: "Pescatora", cat: "tradizionali", ingred: "Sugo, mozzarella, insalata di mare", pNorm: "8,00", pGig: "11,50" },
+            { nome: "Gamberi", cat: "tradizionali", ingred: "Sugo, mozzarella, gamberi", pNorm: "7,50", pGig: "10,50" },
+            { nome: "Salmone", cat: "tradizionali", ingred: "Sugo, mozzarella, salmone", pNorm: "7,50", pGig: "10,00" },
+            { nome: "Polpa di Granchio", cat: "tradizionali", ingred: "Sugo, mozzarella, polpa di granchio", pNorm: "7,50", pGig: "10,00" },
+            { nome: "Prosciutto Crudo", cat: "tradizionali", ingred: "Sugo, mozzarella, prosciutto crudo", pNorm: "7,50", pGig: "9,50" },
+            { nome: "Gorgonzola", cat: "tradizionali", ingred: "Sugo, mozzarella, gorgonzola", pNorm: "6,50", pGig: "8,50" },
+            { nome: "Salsiccia", cat: "tradizionali", ingred: "Sugo, mozzarella, salsiccia secca / fresca", pNorm: "6,50", pGig: "8,50" },
+            { nome: "Melanzana", cat: "tradizionali", ingred: "Sugo, mozzarella, melanzane arrosto", pNorm: "6,00", pGig: "9,00" },
+            { nome: "Tonno", cat: "tradizionali", ingred: "Sugo, mozzarella, tonno", pNorm: "6,50", pGig: "9,00" },
+            { nome: "Sarda", cat: "tradizionali", ingred: "Sugo, mozzarella, salsiccia secca, pecorino", pNorm: "7,50", pGig: "9,50" },
+            { nome: "Capricciosa", cat: "tradizionali", ingred: "Sugo, mozzarella, prosciutto cotto, funghi, uovo", pNorm: "8,00", pGig: "10,00" },
+            { nome: "Peperoni", cat: "tradizionali", ingred: "Sugo, mozzarella, peperoni", pNorm: "6,50", pGig: "9,00" },
+            { nome: "Zucchine", cat: "tradizionali", ingred: "Sugo, mozzarella, zucchine", pNorm: "6,00", pGig: "9,00" },
+            { nome: "Prosciutto Cotto", cat: "tradizionali", ingred: "Sugo, mozzarella, presc. cotto", pNorm: "6,00", pGig: "8,00" },
+            { nome: "Carciofini", cat: "tradizionali", ingred: "Sugo, mozzarella, carciofini sott'olio", pNorm: "6,50", pGig: "8,50" },
+            { nome: "Bufala", cat: "tradizionali", ingred: "Sugo, mozzarella di bufala", pNorm: "7,00", pGig: "10,00" },
+            { nome: "Baiana", cat: "tradizionali", ingred: "Sugo, mozzarella, olive nere, peperoni, salsiccia secca", pNorm: "8,50", pGig: "10,50" },
+            { nome: "Borgata", cat: "tradizionali", ingred: "Sugo, mozzarella, wurstel, patatine, cipolla", pNorm: "8,00", pGig: "10,00" },
+            { nome: "Cacciatora", cat: "tradizionali", ingred: "Sugo, mozzarella, funghi di carne, prosciutto crudo", pNorm: "7,50", pGig: "10,50" },
+            { nome: "Carlofortina", cat: "tradizionali", ingred: "Sugo, mozzarella, pesto, pomodoro fresco, tonno", pNorm: "8,50", pGig: "10,50" },
+            { nome: "Diavola", cat: "tradizionali", ingred: "Sugo, mozzarella, salame, cipolla, peperoncino", pNorm: "7,50", pGig: "10,00" },
+            { nome: "Rustica", cat: "tradizionali", ingred: "Sugo, mozzarella, patate al forno, salsiccia fresca", pNorm: "7,50", pGig: "10,00" },
+            { nome: "Mari e Monti", cat: "tradizionali", ingred: "Sugo, mozzarella, frutti di mare, prosciutto, funghi", pNorm: "10,00", pGig: "12,00" },
+            { nome: "Spianata", cat: "tradizionali", ingred: "Olio, sale, origano", pNorm: "2,50", pGig: "5,00" },
+
+            // SPECIALI
+            { nome: "Affumicata", cat: "speciali", ingred: "Sugo, mozzarella, pancetta affumicata, pecorino", pNorm: "7,50", pGig: "9,50" },
+            { nome: "Ampezzana", cat: "speciali", ingred: "Sugo, mozzarella, speck, gorgonzola", pNorm: "8,50", pGig: "10,50" },
+            { nome: "Attila", cat: "speciali", ingred: "Sugo, mozzarella, funghi, provola, guanciale, pomodoro, rucola, olio piccante", pNorm: "10,50", pGig: "12,50" },
+            { nome: "Catalana", cat: "speciali", ingred: "Sugo, mozzarella, pomodoro fresco, polpa di granchio, cipolla", pNorm: "8,50", pGig: "10,50" },
+            { nome: "Delicata", cat: "speciali", ingred: "Sugo, mozzarella, salmone, zucchine, panna, pepe nero", pNorm: "9,50", pGig: "11,50" },
+            { nome: "Deliziosa", cat: "speciali", ingred: "Sugo, mozzarella, friarelli, salsiccia fresca, patate arrosto", pNorm: "9,00", pGig: "11,50" },
+            { nome: "Duca", cat: "speciali", ingred: "Sugo, mozzarella, funghi di carne, pecorino, salsiccia secca", pNorm: "8,00", pGig: "11,00" },
+            { nome: "Friarelli", cat: "speciali", ingred: "Sugo, mozzarella, friarelli", pNorm: "7,00", pGig: "9,00" },
+            { nome: "Ginevra", cat: "speciali", ingred: "Sugo, mozzarella, speck, taleggio, radicchio, patate arrosto", pNorm: "9,50", pGig: "11,50" },
+            { nome: "Gustosa", cat: "speciali", ingred: "Sugo, mozzarella, porcini, gorgonzola, guanciale", pNorm: "8,50", pGig: "11,50" },
+            { nome: "Incantesimo", cat: "speciali", ingred: "Sugo, mozzarella, salmone, rucola, capperi, pomod. fresco", pNorm: "9,50", pGig: "11,50" },
+            { nome: "Isotta", cat: "speciali", ingred: "Sugo, mozzarella, gamberetti, radicchio, salsa tonnata", pNorm: "8,50", pGig: "11,50" },
+            { nome: "Lussuria", cat: "speciali", ingred: "Sugo, mozzarella, speck, gorgonzola, noci", pNorm: "9,50", pGig: "11,50" },
+            { nome: "Nobile", cat: "speciali", ingred: "Sugo, mozzarella, taleggio, speck, funghi di carne", pNorm: "10,50", pGig: "12,50" },
+            { nome: "Principe", cat: "speciali", ingred: "Sugo, mozzarella di bufala, tonno, pomodoro fresco, gamberetti", pNorm: "11,00", pGig: "13,00" },
+            { nome: "Regina", cat: "speciali", ingred: "Sugo, mozzarella di bufala, salmone, rucola, gamberetti", pNorm: "11,50", pGig: "13,50" },
+            { nome: "Suprema", cat: "speciali", ingred: "Sugo, mozzarella, salmone, gamberetti, tonno, pomodoro fresco, radicchio", pNorm: "12,00", pGig: "15,00" },
+            { nome: "Sfiziosa", cat: "speciali", ingred: "Sugo, mozzarella, gorgonzola, melanzane, basilico", pNorm: "7,00", pGig: "9,00" },
+            { nome: "Valdostana", cat: "speciali", ingred: "Sugo, mozzarella, 4 formaggi, cipolla, funghi prataioli, origano", pNorm: "10,00", pGig: "12,00" },
+            { nome: "Valtellinese", cat: "speciali", ingred: "Sugo, mozzarella, bresaola, rucola, grana", pNorm: "9,50", pGig: "11,50" },
+            { nome: "Tonnosa", cat: "speciali", ingred: "Sugo, mozzarella, pomodoro fresco, tonno, cipolla", pNorm: "8,50", pGig: "9,50" },
+            { nome: "Fantasia di Funghi", cat: "speciali", ingred: "Sugo, mozzarella, varietà di funghi", pNorm: "9,00", pGig: "11,00" },
+            { nome: "Preziosa", cat: "speciali", ingred: "Sugo, mozzarella, guanciale, taleggio", pNorm: "7,50", pGig: "9,50" },
+            { nome: "Mare Fresco", cat: "speciali", ingred: "Sugo, mozzarella, gamberone, cozze, vongole, pomodoro fresco, bottarga, aglio, prezzemolo", pNorm: "12,50", pGig: "15,00" },
+
+            // STAGIONALI
+            { nome: "Asparagi", cat: "stagionali", ingred: "Sugo, mozzarella, asparagi", pNorm: "9,00", pGig: "12,00" },
+            { nome: "Asparagi 4 Formaggi", cat: "stagionali", ingred: "Sugo, mozzarella, asparagi, 4 formaggi", pNorm: "11,00", pGig: "13,00" },
+            { nome: "Ricci", cat: "stagionali", ingred: "Sugo, mozzarella, ricci di mare", pNorm: "Stagionale", pGig: "Stagionale" },
+            { nome: "Asparagi e Ricci", cat: "stagionali", ingred: "Sugo, mozzarella, asparagi, ricci", pNorm: "Stagionale", pGig: "Stagionale" },
+            { nome: "Fiori di Zucca", cat: "stagionali", ingred: "Sugo, mozzarella, fiori di zucca", pNorm: "7,50", pGig: "10,50" },
+            { nome: "Carciofi Freschi", cat: "stagionali", ingred: "Sugo, mozzarella, carciofi freschi", pNorm: "9,00", pGig: "12,00" },
+            { nome: "Carciofi Freschi e 4 Formaggi", cat: "stagionali", ingred: "Sugo, mozzarella, carciofi freschi, 4 formaggi", pNorm: "11,00", pGig: "13,00" },
+            { nome: "Carciofi Freschi e Bottarga", cat: "stagionali", ingred: "Sugo, mozzarella, carciofi freschi, bottarga", pNorm: "11,00", pGig: "13,00" }
+        ];
+
+        let activeCategory = 'all';
+        let currentSize = 'normale'; // 'normale' or 'gigante'
+
+        const menuContainer = document.getElementById('menu-container');
+        const searchInput = document.getElementById('menu-search');
+        const catButtons = document.querySelectorAll('.cat-btn');
+        const sizeNormaleBtn = document.getElementById('size-normale');
+        const sizeGiganteBtn = document.getElementById('size-gigante');
+
+        // Render Function
+        function renderMenu() {
+            const query = searchInput.value.toLowerCase().trim();
+            menuContainer.innerHTML = '';
+
+            const filtered = menuPizze.filter(pizza => {
+                const matchCategory = activeCategory === 'all' || pizza.cat === activeCategory;
+                const matchSearch = pizza.nome.toLowerCase().includes(query) || pizza.ingred.toLowerCase().includes(query);
+                return matchCategory && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                menuContainer.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-slate-400">
+                        <i class="fa-solid fa-pizza-slice text-4xl mb-3"></i>
+                        <p class="text-base font-semibold">Nessuna pizza trovata con questi criteri.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(pizza => {
+                const isStagionale = pizza.cat === 'stagionali';
+                const priceToShow = currentSize === 'normale' ? pizza.pNorm : pizza.pGig;
+                const sizeLabel = currentSize === 'normale' ? 'Normale' : 'Gigante';
+
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-5 shadow-sm hover:shadow-md border border-slate-200 flex flex-col justify-between transition-all duration-200 group hover:border-brand-red/40";
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start gap-2 mb-2">
+                            <h4 class="font-bold text-lg text-slate-900 group-hover:text-brand-red transition-colors">${pizza.nome}</h4>
+                            ${isStagionale ? '<span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase">Stagionale</span>' : ''}
+                        </div>
+                        <p class="text-xs text-slate-500 leading-relaxed mb-4">${pizza.ingred}</p>
+                    </div>
+
+                    <div class="pt-3 border-t border-slate-100 flex justify-between items-center">
+                        <span class="text-xs text-slate-400 font-medium">Formato ${sizeLabel}</span>
+                        <div class="text-brand-red font-bold text-lg">
+                            ${priceToShow.includes('Stagionale') ? '<span class="text-xs text-brand-gold bg-brand-darkred px-2 py-1 rounded-md">Vedi in Locale</span>' : '€' + priceToShow}
+                        </div>
+                    </div>
+                `;
+
+                menuContainer.appendChild(card);
+            });
+        }
+
+        // Event Listeners for Filters
+        catButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                catButtons.forEach(b => {
+                    b.classList.remove('bg-brand-red', 'text-white');
+                    b.classList.add('bg-slate-100', 'text-slate-700');
+                });
+                btn.classList.remove('bg-slate-100', 'text-slate-700');
+                btn.classList.add('bg-brand-red', 'text-white');
+
+                activeCategory = btn.dataset.cat;
+                renderMenu();
+            });
+        });
+
+        searchInput.addEventListener('input', renderMenu);
+
+        // Size Toggle Listeners
+        sizeNormaleBtn.addEventListener('click', () => {
+            currentSize = 'normale';
+            sizeNormaleBtn.classList.add('bg-white', 'text-brand-darkred', 'shadow-sm');
+            sizeNormaleBtn.classList.remove('text-slate-600');
+            sizeGiganteBtn.classList.remove('bg-white', 'text-brand-darkred', 'shadow-sm');
+            sizeGiganteBtn.classList.add('text-slate-600');
+            renderMenu();
+        });
+
+        sizeGiganteBtn.addEventListener('click', () => {
+            currentSize = 'gigante';
+            sizeGiganteBtn.classList.add('bg-white', 'text-brand-darkred', 'shadow-sm');
+            sizeGiganteBtn.classList.remove('text-slate-600');
+            sizeNormaleBtn.classList.remove('bg-white', 'text-brand-darkred', 'shadow-sm');
+            sizeNormaleBtn.classList.add('text-slate-600');
+            renderMenu();
+        });
+
+        // Mobile Menu Drawer Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Booking Form Submission Handler
+        const bookingForm = document.getElementById('booking-form');
+        const bookingAlert = document.getElementById('booking-alert');
+
+        bookingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            bookingAlert.classList.remove('hidden');
+            bookingForm.reset();
+            setTimeout(() => {
+                bookingAlert.classList.add('hidden');
+            }, 6000);
+        });
+
+        // Funzione per la condivisione del sito
+        function shareWebsite() {
+            const shareData = {
+                title: 'Pizzeria da Giulio - Via Michelangelo Pira 2a',
+                text: 'Guarda il menu completo e prenota un tavolo alla Pizzeria da Giulio!',
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData).catch((err) => console.log('Condivisione annullata:', err));
+            } else {
+                // Fallback: copia negli appunti
+                const dummy = document.createElement('input');
+                document.body.appendChild(dummy);
+                dummy.value = window.location.href;
+                dummy.select();
+                document.execCommand('copy');
+                document.body.removeChild(dummy);
+                alert('Link del sito copiato negli appunti! Ora puoi incollarlo su WhatsApp o sui tuoi social.');
+            }
+        }
+
+        // Initial Render
+        renderMenu();
+    </script>
+</body>
+</html>
